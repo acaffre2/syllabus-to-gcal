@@ -1,6 +1,9 @@
 import streamlit as st
 import pandas as pd
 from pipeline import process_pdf_and_generate_csv
+    
+st.set_page_config(page_title="📚 Syllabus Calendar Converter", layout="centered")
+st.title(":books: Syllabus Calendar Converter")
 
 openai_key = st.secrets["OPENAI_API_KEY"]
 
@@ -9,9 +12,6 @@ if password != st.secrets["APP_PASSWORD"]:
     st.warning("Unauthorized access. Please enter the correct password.")
     st.stop()
     
-st.set_page_config(page_title="📚 Syllabus Calendar Converter", layout="centered")
-st.title(":books: Syllabus Calendar Converter")
-
 st.markdown("Upload a syllabus PDF and generate a calendar-friendly CSV of all deliverables.")
 
 uploaded_file = st.file_uploader(":page_facing_up: Upload your syllabus (.pdf)", type="pdf")
