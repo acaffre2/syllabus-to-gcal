@@ -78,7 +78,7 @@ def normalize_row(row):
 
 def query_gpt(prompt, model="gpt-3o-mini"):
     response = client.chat.completions.create(
-        model=model,
+        model=model_name,
         messages=[
             {"role": "system", "content": "You are an expert at extracting structured calendar events from academic syllabi. Follow the user instructions exactly."},
             {"role": "user", "content": prompt}
@@ -87,7 +87,7 @@ def query_gpt(prompt, model="gpt-3o-mini"):
     )
     return response.choices[0].message.content.strip()
 
-def process_pdf_and_generate_csv(file_obj, course_name, user_comment, openai_key):
+def process_pdf_and_generate_csv(file_obj, course_name, user_comment, openai_key, model_name="gpt-3.5-turbo"):
     client = OpenAI(api_key=openai_key)
     raw_text = extract_text_and_tables_flex(file_obj)
     all_chunks = chunk_text(raw_text)
@@ -105,7 +105,7 @@ def process_pdf_and_generate_csv(file_obj, course_name, user_comment, openai_key
     D, I = index.search(query_embedding, k=10)
     relevant_chunks = [date_chunks[i] for i in I[0]]
 
-    tokenizer = tiktoken.encoding_for_model("gpt-3o-mini")
+    tokenizer = tiktoken.encoding_for_model(model_name)
     batched_chunks = batch_chunks_token_based(relevant_chunks, tokenizer)
 
     base_prompt = f"""You are helping convert a college course syllabus into Google Calendar assignments.
