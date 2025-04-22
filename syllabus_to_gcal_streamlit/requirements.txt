@@ -1,0 +1,7 @@
+streamlit
+pdfplumber
+pandas
+sentence-transformers
+faiss-cpu
+openai
+tiktoken
