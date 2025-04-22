@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 from pipeline import process_pdf_and_generate_csv
-    
+
 st.set_page_config(page_title="📚 Syllabus Calendar Converter", layout="centered")
 st.title(":books: Syllabus Calendar Converter")
 
@@ -11,10 +11,10 @@ password = st.text_input("Enter access code", type="password")
 if password != st.secrets["APP_PASSWORD"]:
     st.warning("Unauthorized access. Please enter the correct password.")
     st.stop()
-    
-st.markdown("Upload a syllabus PDF and generate a calendar-friendly CSV of all deliverables.")
 
+st.markdown("Upload a syllabus PDF and generate a calendar-friendly CSV of all deliverables.")
 uploaded_file = st.file_uploader(":page_facing_up: Upload your syllabus (.pdf)", type="pdf")
+course_name = st.text_input("Course Name")
 user_note = st.text_area(":memo: Notes about the syllabus format (optional)")
 
 if uploaded_file:
