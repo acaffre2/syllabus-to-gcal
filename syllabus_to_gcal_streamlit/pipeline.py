@@ -76,7 +76,7 @@ def normalize_row(row):
     start_date = row[1].strip()
     return (subject, start_date)
 
-def query_gpt(prompt, model="gpt-3o-mini"):
+def query_gpt(prompt, model=model_name):
     response = client.chat.completions.create(
         model=model_name,
         messages=[
@@ -135,7 +135,7 @@ Return only the CSV — no extra explanation.
 
     for i, batch in enumerate(batched_chunks):
         full_prompt = f"{base_prompt}\n\n{batch}"
-        response = query_gpt(full_prompt)
+        response = query_gpt(full_prompt, model_name)
         try:
             f = io.StringIO(response)
             reader = csv.reader(f)
