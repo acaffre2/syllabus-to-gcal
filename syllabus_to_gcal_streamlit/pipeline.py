@@ -10,6 +10,7 @@ from sentence_transformers import SentenceTransformer
 import tiktoken
 from openai import OpenAI
 import openai
+from datetime import datetime
 
 # Initialize OpenAI client
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
@@ -45,6 +46,14 @@ def contains_date_info(text):
         r'\b(due|exam|test|quiz|paper|project|assignment|submit|submission|by|read|reading|chapter|[A-Z][a-z]{2,8} \d{1,2}|on \d{1,2}/\d{1,2})\b',
         text, re.IGNORECASE
     ))
+
+def is_valid_year(date_str, allowed_year_str):
+    try:
+        allowed_year = int(allowed_year_str)
+        dt = datetime.strptime(date_str.strip(), "%Y-%m-%d")
+        return dt.year == allowed_year
+    except:
+        return False
 
 def count_tokens(text, tokenizer):
     return len(tokenizer.encode(text))
@@ -87,7 +96,7 @@ def query_gpt(prompt, model):
     )
     return response.choices[0].message.content.strip()
 
-def process_pdf_and_generate_csv(file_obj, course_name, user_comment, openai_key, model_name="gpt-3.5-turbo"):
+def process_pdf_and_generate_csv(file_obj, course_name, user_comment, openai_key, model_name="gpt-3.5-turbo", allowed_year="2025"):
     client = OpenAI(api_key=openai_key)
     raw_text = extract_text_and_tables_flex(file_obj)
     all_chunks = chunk_text(raw_text)
@@ -160,6 +169,19 @@ Return only the CSV — no extra explanation. If any field contains a comma, enc
         else:
             skipped_count += 1
             print(f"⚠️ Skipping malformed row: {row}")
+    
+    if not clean_rows:
+        return pd.DataFrame(columns=column_names)
+    
+    expected_col_count = len(column_names)
+    clean_rows = []
+    skipped_count = 0
+    
+    for row in all_rows_by_key.values():
+        if len(row) == expected_col_count and is_valid_year(row[1], allowed_year):
+            clean_rows.append(row)
+        else:
+            skipped_count += 1
     
     if not clean_rows:
         return pd.DataFrame(columns=column_names)
