@@ -4,6 +4,11 @@ from pipeline import process_pdf_and_generate_csv
 
 openai_key = st.secrets["OPENAI_API_KEY"]
 
+password = st.text_input("Enter access code", type="password")
+if password != st.secrets["APP_PASSWORD"]:
+    st.warning("Unauthorized access. Please enter the correct password.")
+    st.stop()
+    
 st.set_page_config(page_title="📚 Syllabus Calendar Converter", layout="centered")
 st.title(":books: Syllabus Calendar Converter")
 
