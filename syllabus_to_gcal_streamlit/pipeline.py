@@ -125,6 +125,7 @@ Subject, Start Date, Start Time, End Date, End Time, All Day Event, Description,
 • Only include deliverables with specific due dates
 • If no time is listed, classify it as an all day event
 • If no end time is listed, make it 30 minutes after the start time
+• Only include assignments for the semester shown in the syllabus or based on the year visible in the file (e.g., Fall 2024). Do not include duplicate events from previous years
 • If any field contains a comma, enclose it in double quotes
 
 Return only the CSV — no extra explanation. If any field contains a comma, enclose it in double quotes.
