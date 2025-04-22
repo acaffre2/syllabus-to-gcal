@@ -105,7 +105,7 @@ def process_pdf_and_generate_csv(file_obj, course_name, user_comment, openai_key
     D, I = index.search(query_embedding, k=10)
     relevant_chunks = [date_chunks[i] for i in I[0]]
 
-    tokenizer = tiktoken.encoding_for_model("gpt-4o")
+    tokenizer = tiktoken.encoding_for_model("gpt-3o-mini")
     batched_chunks = batch_chunks_token_based(relevant_chunks, tokenizer)
 
     base_prompt = f"""You are helping convert a college course syllabus into Google Calendar assignments.
