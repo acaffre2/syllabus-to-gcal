@@ -22,7 +22,7 @@ if uploaded_file:
     
     if st.button("🚀 Process Syllabus"):
         with st.spinner("Processing your syllabus..."):
-            df = process_pdf_and_generate_csv(file_obj, course_name, user_comment, openai_key)
+            df = process_pdf_and_generate_csv(uploaded_file, course_name, user_note, openai_key)
 
         if not df.empty:
             st.success(":white_check_mark: Success! Your CSV is ready.")
