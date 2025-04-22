@@ -13,9 +13,31 @@ if password != st.secrets["APP_PASSWORD"]:
     st.stop()
 
 st.markdown("Upload a syllabus PDF and generate a calendar-friendly CSV of all deliverables.")
-uploaded_file = st.file_uploader(":page_facing_up: Upload your syllabus (.pdf)", type="pdf")
+uploaded_file = st.file_uploader("Upload your syllabus (.pdf)", type="pdf")
 course_name = st.text_input("Course Name")
-user_note = st.text_area(":memo: Notes about the syllabus format (optional)")
+user_note = st.text_area("Notes about the syllabus format (optional)")
+with st.expander("💡 Suggestions for writing helpful notes about your syllabus format"):
+    st.markdown("""
+    To improve the accuracy of your calendar, consider adding information like:
+
+    - 📍 **Where to find key information**  
+      (e.g., “All deliverables are in a table on pages 3–5” or “Assignments are listed in the weekly schedule section”)
+
+    - 🧠 **What to include**  
+      (e.g., “Please include readings, group assignments, quizzes, and exams”)
+
+    - 🔎 **Keywords to focus on**  
+      (e.g., “Look for phrases like *submit*, *exam*, *reading*, *project*, *due*”)
+
+    - 🧾 **How to treat grouped items**  
+      (e.g., “List each project phase as a separate event”)
+
+    - 📊 **If content is in a table**  
+      (e.g., “Only use the *Assignment* and *Due Date* columns from the table”)
+
+    Even just a short comment helps the model better understand your syllabus!
+    """)
+
 allowed_year = st.text_input("What year is this syllabus for?", value="2025")
 
 model_name = st.radio(
