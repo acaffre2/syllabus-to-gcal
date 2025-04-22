@@ -76,7 +76,7 @@ def normalize_row(row):
     start_date = row[1].strip()
     return (subject, start_date)
 
-def query_gpt(prompt, model=model_name):
+def query_gpt(prompt, model):
     response = client.chat.completions.create(
         model=model,
         messages=[
