@@ -127,7 +127,7 @@ Subject, Start Date, Start Time, End Date, End Time, All Day Event, Description,
 • If no end time is listed, make it 30 minutes after the start time
 • If any field contains a comma, enclose it in double quotes
 
-Return only the CSV — no extra explanation.
+Return only the CSV — no extra explanation. If any field contains a comma, enclose it in double quotes.
 """
 
     all_rows_by_key = {}
@@ -148,5 +148,19 @@ Return only the CSV — no extra explanation.
         except Exception as e:
             print(f"Error parsing GPT output batch {i + 1}: {e}")
             print("Raw output:\n", response)
-
-    return pd.DataFrame(list(all_rows_by_key.values()), columns=column_names)
+            
+    expected_col_count = len(column_names)
+    clean_rows = []
+    skipped_count = 0
+    
+    for row in all_rows_by_key.values():
+        if len(row) == expected_col_count:
+            clean_rows.append(row)
+        else:
+            skipped_count += 1
+            print(f"⚠️ Skipping malformed row: {row}")
+    
+    if not clean_rows:
+        return pd.DataFrame(columns=column_names)
+    
+    return pd.DataFrame(clean_rows, columns=column_names)
