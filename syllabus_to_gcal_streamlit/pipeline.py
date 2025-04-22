@@ -78,7 +78,7 @@ def normalize_row(row):
 
 def query_gpt(prompt, model=model_name):
     response = client.chat.completions.create(
-        model=model_name,
+        model=model,
         messages=[
             {"role": "system", "content": "You are an expert at extracting structured calendar events from academic syllabi. Follow the user instructions exactly."},
             {"role": "user", "content": prompt}
