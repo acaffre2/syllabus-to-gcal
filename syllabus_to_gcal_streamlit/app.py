@@ -16,6 +16,7 @@ st.markdown("Upload a syllabus PDF and generate a calendar-friendly CSV of all d
 uploaded_file = st.file_uploader(":page_facing_up: Upload your syllabus (.pdf)", type="pdf")
 course_name = st.text_input("Course Name")
 user_note = st.text_area(":memo: Notes about the syllabus format (optional)")
+allowed_year = st.text_input("What year is this syllabus for?", value="2025")
 
 model_name = st.radio(
     "Choose GPT model for extraction:",
@@ -28,7 +29,7 @@ if uploaded_file:
     
     if st.button("🚀 Process Syllabus"):
         with st.spinner("Processing your syllabus..."):
-            df = process_pdf_and_generate_csv(uploaded_file, course_name, user_note, openai_key, model_name)
+            df = process_pdf_and_generate_csv(uploaded_file, course_name, user_note, openai_key, model_name, allowed_year)
 
         if not df.empty:
             st.success(":white_check_mark: Success! Your CSV is ready.")
