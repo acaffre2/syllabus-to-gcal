@@ -15,9 +15,9 @@ from datetime import datetime
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 def get_openai_embeddings(texts, openai_key, model="text-embedding-3-small"):
-    openai.api_key = openai_key
-    response = openai.Embedding.create(model=model, input=texts)
-    return [item["embedding"] for item in response["data"]]
+    client = OpenAI(api_key=openai_key)
+    response = client.embeddings.create(model=model, input=texts)
+    return [item.embedding for item in response.data]
     
 def extract_text_and_tables_flex(file_obj):
     combined_text = ""
