@@ -10,6 +10,7 @@ import tiktoken
 from openai import OpenAI
 import openai
 from datetime import datetime
+import numpy as np
 
 # Initialize OpenAI client
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
@@ -109,10 +110,11 @@ def process_pdf_and_generate_csv(file_obj, course_name, user_comment, openai_key
 
     dim = len(embeddings[0])
     index = faiss.IndexFlatL2(dim)
-    index.add(embeddings)
+    index.add(np.array(embeddings).astype("float32"))
+
 
     query = "Find any assignments, readings, quizzes, presentations, projects, or exams with specific due dates."
-    query_embedding = get_openai_embeddings([query], openai_key)
+    query_embedding = np.array(get_openai_embeddings([query], openai_key)).astype("float32")
     D, I = index.search(query_embedding, k=10)
     relevant_chunks = [date_chunks[i] for i in I[0]]
 
