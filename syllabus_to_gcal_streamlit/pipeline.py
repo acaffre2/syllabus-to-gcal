@@ -6,7 +6,6 @@ import re
 import pdfplumber
 import pandas as pd
 import faiss
-from sentence_transformers import SentenceTransformer
 import tiktoken
 from openai import OpenAI
 import openai
@@ -15,6 +14,11 @@ from datetime import datetime
 # Initialize OpenAI client
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
+def get_openai_embeddings(texts, openai_key, model="text-embedding-3-small"):
+    openai.api_key = openai_key
+    response = openai.Embedding.create(model=model, input=texts)
+    return [item["embedding"] for item in response["data"]]
+    
 def extract_text_and_tables_flex(file_obj):
     combined_text = ""
     all_table_rows = []
@@ -97,20 +101,18 @@ def query_gpt(prompt, model):
     return response.choices[0].message.content.strip()
 
 def process_pdf_and_generate_csv(file_obj, course_name, user_comment, openai_key, model_name="gpt-3.5-turbo", allowed_year="2025"):
-    client = OpenAI(api_key=openai_key)
     raw_text = extract_text_and_tables_flex(file_obj)
     all_chunks = chunk_text(raw_text)
     date_chunks = [chunk for chunk in all_chunks if contains_date_info(chunk)]
+    
+    embeddings = get_openai_embeddings(date_chunks, openai_key)
 
-    model = SentenceTransformer('all-MiniLM-L6-v2')
-    embeddings = model.encode(date_chunks)
-
-    dim = embeddings.shape[1]
+    dim = len(embeddings[0])
     index = faiss.IndexFlatL2(dim)
     index.add(embeddings)
 
     query = "Find any assignments, readings, quizzes, presentations, projects, or exams with specific due dates."
-    query_embedding = model.encode([query])
+    query_embedding = get_openai_embeddings([query], openai_key)
     D, I = index.search(query_embedding, k=10)
     relevant_chunks = [date_chunks[i] for i in I[0]]
 
