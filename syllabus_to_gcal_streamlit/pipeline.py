@@ -127,23 +127,22 @@ Here is a bit of information about the PDF's format: {user_comment}
 
 You are also given excerpts from the syllabus, including some text blocks and tables marked with [TABLE START] and [TABLE END].
 
-Extract any deliverables that have due dates — including assignments, readings, quizzes, presentations, projects, or exams.
+1) Extract any deliverables that have due dates — including assignments, readings, quizzes, presentations, projects, or exams.
 
-Format your output as a CSV with the following columns:
-Subject, Start Date, Start Time, End Date, End Time, All Day Event, Description, Location.
+2) Format your output as a CSV with the following columns — Subject, Start Date, Start Time, End Date, End Time, All Day Event, Description, Location — and follow these formatting rules:
 
 • Use the course name "{course_name}" as the prefix for every Subject (e.g., "{course_name}: Homework 1")
-• Use the Description column to describe the assignment, reading, or quiz
-• Leave the Location column blank unless an exam location is explicitly provided
 • Only include deliverables with specific due dates
+• Use {allowed_year} as the year for the date.
 • If no time is listed, classify it as an all day event
 • If no end time is listed, make it 30 minutes after the start time
-• Use {allowed_year} as the year for the date.
+• Use the Description column to describe the assignment, reading, or quiz
+• Leave the Location column blank unless an exam location is explicitly provided
 • If any field contains a comma, enclose it in double quotes
 
-Check that no two items have the same date and describe the same general task (even if the title or wording is slightly different). If this has happened, treat them as duplicates and only include one.
+3) Assignments may be listed more than once. Check that no two items have the same date and describe the same general task (even if the title or wording is slightly different). If this has happened, prefer the version with the most complete or informative title and description.
 
-Return only the CSV — no extra explanation.
+4) Return only the CSV — no extra explanation.
 """
 
     all_rows_by_key = {}
