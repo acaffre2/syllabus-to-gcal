@@ -141,7 +141,7 @@ Subject, Start Date, Start Time, End Date, End Time, All Day Event, Description,
 • Use {allowed_year} as the year for the date.
 • If any field contains a comma, enclose it in double quotes
 
-Return only the CSV — no extra explanation.
+Check that no assignments have been repeated and then return only the CSV — no extra explanation.
 """
 
     all_rows_by_key = {}
