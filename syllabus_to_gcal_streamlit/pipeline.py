@@ -127,7 +127,7 @@ Here is a bit of information about the PDF's format: {user_comment}
 
 You are also given excerpts from the syllabus, including some text blocks and tables marked with [TABLE START] and [TABLE END].
 
-Extract any deliverables that have due dates — including assignments, readings, quizzes, presentations, projects, or exams. If a deliverable does not have a clear title, assign a default name such as “Assignment 1”, “Assignment 2”, etc. For example, if an item simply lists “Read Chapter 1” on 9/6, include that as a deliverable.
+Extract any deliverables that have due dates — including assignments, readings, quizzes, presentations, projects, or exams.
 
 Format your output as a CSV with the following columns:
 Subject, Start Date, Start Time, End Date, End Time, All Day Event, Description, Location.
