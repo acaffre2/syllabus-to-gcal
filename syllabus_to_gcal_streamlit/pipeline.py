@@ -140,8 +140,9 @@ Subject, Start Date, Start Time, End Date, End Time, All Day Event, Description,
 • If no end time is listed, make it 30 minutes after the start time
 • Use {allowed_year} as the year for the date.
 • If any field contains a comma, enclose it in double quotes
+• If any two items have the same date and describe the same general task (even if the title or wording is slightly different), treat them as duplicates and only include one.
 
-Check that no assignments have been repeated and then return only the CSV — no extra explanation.
+Return only the CSV — no extra explanation.
 """
 
     all_rows_by_key = {}
