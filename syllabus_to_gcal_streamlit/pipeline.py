@@ -140,7 +140,7 @@ You are also given excerpts from the syllabus, including some text blocks and ta
 • Leave the Location column blank unless an exam location is explicitly provided
 • If any field contains a comma, enclose it in double quotes
 
-3) Assignments may be listed more than once. Check that no two items have the same date and describe the same general task (even if the title or wording is slightly different). If this has happened, prefer the version with the most complete or informative title and description.
+3) Check! If two items share the same due date and describe the same general task, you must treat them as duplicates. Do not include both. Keep only the more complete or informative version.
 
 4) Return only the CSV — no extra explanation.
 """
